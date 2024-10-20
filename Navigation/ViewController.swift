@@ -5,7 +5,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Установка фона
+        
         view.backgroundColor = .white
         
         // Пример добавления кнопки
