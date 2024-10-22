@@ -27,9 +27,18 @@ class ProfileHeaderView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .gray
-        label.text = "Введите новый статус"
+        label.text = "Ваш статус:"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+
+    let statusTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Введите новый статус"
+        textField.font = UIFont.systemFont(ofSize: 14)
+        textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
     }()
 
     let setStatusButton: UIButton = {
@@ -61,6 +70,7 @@ class ProfileHeaderView: UIView {
         self.addSubview(profileImageView)
         self.addSubview(nameLabel)
         self.addSubview(statusLabel)
+        self.addSubview(statusTextField)
         self.addSubview(setStatusButton)
 
         // Добавляем обработчик для кнопки
@@ -87,8 +97,13 @@ class ProfileHeaderView: UIView {
             statusLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 27),
             statusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
 
+            // Поле для ввода статуса
+            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 8),
+            statusTextField.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 27),
+            statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+
             // Кнопка
-            setStatusButton.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 34),
+            setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 20),
             setStatusButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             setStatusButton.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -32),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50)
@@ -97,7 +112,9 @@ class ProfileHeaderView: UIView {
 
     // Функция, вызываемая при нажатии на кнопку
     @objc func buttonPressed() {
-        print("Статус пользователя: \(statusLabel.text ?? "Статус отсутствует")")
+        let newStatus = statusTextField.text ?? "Статус отсутствует"
+        statusLabel.text = newStatus
+        print("Статус пользователя: \(newStatus)")
     }
 }
 
