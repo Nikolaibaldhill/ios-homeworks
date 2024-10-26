@@ -25,6 +25,9 @@ class ProfileViewController: UIViewController {
         // Установка заголовка
         title = "Profile"
 
+        // Скрываем кнопку "Назад"
+        self.navigationItem.hidesBackButton = true
+
         // Отключаем использование автоматических ограничений по умолчанию
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -36,6 +39,9 @@ class ProfileViewController: UIViewController {
 
         // Устанавливаем Auto Layout для headerView и кнопки
         setupConstraints()
+
+        // Добавляем действие для новой кнопки (опционально)
+        newButton.addTarget(self, action: #selector(newButtonTapped), for: .touchUpInside)
     }
 
     private func setupConstraints() {
@@ -50,7 +56,13 @@ class ProfileViewController: UIViewController {
             newButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             newButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             newButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            newButton.heightAnchor.constraint(equalToConstant: 50) // Опционально можно задать высоту кнопки
+            newButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
+
+    // Метод, вызываемый при нажатии на новую кнопку (опционально)
+    @objc private func newButtonTapped() {
+        print("Новая кнопка нажата")
+    }
 }
+

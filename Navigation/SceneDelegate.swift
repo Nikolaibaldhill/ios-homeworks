@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         )
         
         let profileNavigationController = createNavigationController(
-            rootViewController: ProfileViewController(),
+            rootViewController: LogInViewController(),  // Изменили на LogInViewController
             title: "Profile",
             imageName: "person.fill"
         )
