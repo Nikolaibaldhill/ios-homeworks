@@ -67,18 +67,32 @@ class FeedViewController: UIViewController {
 
     // Открытие PostViewController при нажатии на первую кнопку
     @objc func openPost1() {
-        let post = Post(title: "First Post")
+        let post = Post(
+            title: "First Post",
+            author: "John Doe",
+            description: "This is the first post",
+            image: "image1",
+            likes: 120,
+            views: 240
+        )
         let postViewController = PostViewController()
         postViewController.post = post
         navigationController?.pushViewController(postViewController, animated: true)
     }
 
-    // Открытие PostViewController при нажатии на вторую кнопку
     @objc func openPost2() {
-        let post = Post(title: "Second Post")
+        let post = Post(
+            title: "Second Post",
+            author: "Jane Smith",
+            description: "This is the second post",
+            image: "image2",
+            likes: 95,
+            views: 180
+        )
         let postViewController = PostViewController()
         postViewController.post = post
         navigationController?.pushViewController(postViewController, animated: true)
     }
+
 }
 
