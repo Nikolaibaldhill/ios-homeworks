@@ -117,4 +117,3 @@ class ProfileHeaderView: UIView {
         print("Статус пользователя: \(newStatus)")
     }
 }
-

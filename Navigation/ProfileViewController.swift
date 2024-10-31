@@ -2,67 +2,69 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    // Создаём переменную для экземпляра ProfileHeaderView
-    let headerView = ProfileHeaderView()
-
-    // Создаем новую кнопку
-    let newButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Новая кнопка", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    // Экземпляр UITableView для отображения списка публикаций
+    let tableView = UITableView()
+    
+    // Массив публикаций для отображения в таблице
+    let posts: [Post] = [
+        Post(title: "First Post", author: "John Doe", description: "First post description", image: "image1", likes: 120, views: 240),
+        Post(title: "Second Post", author: "Jane Smith", description: "Second post description", image: "image2", likes: 95, views: 180),
+        Post(title: "Third Post", author: "Alex Brown", description: "Third post description", image: "image3", likes: 250, views: 300),
+        Post(title: "Fourth Post", author: "Emily White", description: "Fourth post description", image: "image4", likes: 75, views: 90)
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Установка светло-серого фона
-        view.backgroundColor = .lightGray
-
-        // Установка заголовка
+        
+        view.backgroundColor = .white
         title = "Profile"
-
-        // Скрываем кнопку "Назад"
-        self.navigationItem.hidesBackButton = true
-
-        // Отключаем использование автоматических ограничений по умолчанию
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-
-        // Добавляем headerView как subview
-        view.addSubview(headerView)
-
-        // Добавляем кнопку на экран
-        view.addSubview(newButton)
-
-        // Устанавливаем Auto Layout для headerView и кнопки
-        setupConstraints()
-
-        // Добавляем действие для новой кнопки (опционально)
-        newButton.addTarget(self, action: #selector(newButtonTapped), for: .touchUpInside)
-    }
-
-    private func setupConstraints() {
+        
+        // Настройка и добавление tableView
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
+        
+        // Настройка делегата и источника данных для tableView
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        // Регистрация кастомной ячейки
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
+        
+        // Закрепляем tableView к краям экрана
         NSLayoutConstraint.activate([
-            // Установка Auto Layout для headerView
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 220),
-
-            // Установка Auto Layout для новой кнопки
-            newButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            newButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            newButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            newButton.heightAnchor.constraint(equalToConstant: 50)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-
-    // Метод, вызываемый при нажатии на новую кнопку (опционально)
-    @objc private func newButtonTapped() {
-        print("Новая кнопка нажата")
     }
 }
 
+// MARK: - UITableViewDataSource
+
+extension ProfileViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Количество строк равно количеству публикаций
+        return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Используем PostTableViewCell для отображения публикации
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as? PostTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        // Настраиваем ячейку с данными из публикации
+        let post = posts[indexPath.row]
+        cell.configure(with: post)
+        
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension ProfileViewController: UITableViewDelegate {
+    // Методы делегата можно добавить по необходимости
+}
