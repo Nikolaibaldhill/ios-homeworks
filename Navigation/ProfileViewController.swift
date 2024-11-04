@@ -19,6 +19,11 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .white
         title = "Profile"
         
+        // Создаём headerView и устанавливаем его как tableHeaderView
+        let headerView = ProfileHeaderView()
+        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 220) // Задаём высоту заголовка
+        tableView.tableHeaderView = headerView
+        
         // Настройка и добавление tableView
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
